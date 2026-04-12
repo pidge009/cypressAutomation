@@ -23,3 +23,11 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getLoginCode', (serverID, email) => {
+    return cy.mailosaurGetMessage(serverID, {
+        sentTo: email,
+    }).then((message) => {
+        return message.html.codes[0].value
+    })
+})
