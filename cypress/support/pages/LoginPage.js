@@ -16,6 +16,7 @@ export class LoginPage {
         utils.enterText(userNameValueLocator, userName)
         utils.enterText(passwordValueLocator, password)
         utils.click(loginBtnLocator)
+        utils.explicitWait(2000)
     }
 
     verifyLoginCodeSendMethodValidation(methodName) {
@@ -26,6 +27,7 @@ export class LoginPage {
 
     sendLoginCodeToUserEmail() {
         utils.click(sendLoginCodeToUserEmailLocator)
+        utils.explicitWait(2000)
     }
 
     FetchAndEnterLoginCode(serverID, userEmailId) {
