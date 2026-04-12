@@ -18,6 +18,7 @@ npm run cy-run-all
 
 # NOTE 
 
-"delete:reports": "rm -r cypress/reports/* || true", // this script from package.json will only work on Linux or mac 
+The delete:reports script differs based on the operating system.
+Use rm -r for Linux/macOS environments and rmdir /s /q for Windows Command Prompt to remove the Cypress reports directory.
 
-"delete:reports": "rmdir /s /q cypress/reports/* || true", // this script from package.json will only work on WIN CP if you are working on 
+Created a .env file to store sensitive information such as PASSWORD, MAILOSAUR_API_KEY, and MAILOSAUR_SERVER_ID. This ensures that these credentials are not exposed or committed to the Git repository.
