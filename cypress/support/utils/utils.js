@@ -13,6 +13,10 @@ export class Utils {
             cy.wrap(locator).clear({ force: true }).type(desiredText)
         })
     }
+
+    explicitWait(value) {
+        cy.wait(value)
+    }
 }
 
 export const utils = new Utils()
