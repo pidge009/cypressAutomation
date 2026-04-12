@@ -4,8 +4,8 @@ require('dotenv').config();
 module.exports = defineConfig({
   allowCypressEnv: false,
   env: {
-    "MAILOSAUR_API_KEY": "16essZUreUhw8cxdWdfBpvnQ4Xjw0QQx",
-    "MAILOSAUR_SERVER_ID": "xnc4e9w9",
+    "MAILOSAUR_API_KEY": process.env.MAILOSAUR_API_KEY,
+    "MAILOSAUR_SERVER_ID": process.env.MAILOSAUR_SERVER_ID,
     "PASSWORD": process.env.PASSWORD
   },
   expose: {
@@ -14,10 +14,15 @@ module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
+      require('cypress-mochawesome-reporter/plugin')(on);
       return config;
     },
     specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
     viewportHeight: 1080,
     viewportWidth: 1920,
   },
+  reporter: 'cypress-multi-reporters',
+  reporterOptions: {
+    configFile: 'reporter-config.json',
+  }
 });
