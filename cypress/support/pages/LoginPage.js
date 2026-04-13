@@ -7,6 +7,9 @@ const loginBtnLocator = '#login-btn'
 const validationMethodselectedLocator = 'input[type="radio"]'
 const sendLoginCodeToUserEmailLocator = '[data-testid="next-button-main"]'
 const LoginCodeLocator = '.code-input'
+const codeMessageLocator = '.code-message'
+const errorSendingValidationLocator = '.modal-content'
+
 
 // Methods
 
@@ -27,7 +30,6 @@ export class LoginPage {
 
     sendLoginCodeToUserEmail() {
         utils.click(sendLoginCodeToUserEmailLocator)
-        utils.explicitWait(2000)
     }
 
     FetchAndEnterLoginCode(serverID, userEmailId) {
@@ -40,6 +42,13 @@ export class LoginPage {
                     .type(digit)
             })
         })  
+    }
+    verifySuccessfulLogin(stepName) {
+        utils.verifyStepIsSuccessful(codeMessageLocator , stepName)
+    }
+
+     verifyLoginCodeSent(stepName) {
+        utils.verifyStepIsSuccessful(errorSendingValidationLocator , stepName)
     }
 }
 

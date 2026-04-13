@@ -10,16 +10,15 @@ describe('View IQ platform Test Suite', () => {
       password = env.PASSWORD
       applicationURL = Cypress.expose('BASE_URL')
       userEmailId = `challenge@${serverID}.mailosaur.net`
+      cy.mailosaurDeleteAllMessages(serverID)
       cy.visit(applicationURL)
     })
-  })
-  after(() => {
-    cy.mailosaurDeleteAllMessages(serverID)
   })
   it('login with Mailosaur for ViewIQ', () => {
     onloginPage.login(userEmailId, password)
     onloginPage.verifyLoginCodeSendMethodValidation('Email')
     onloginPage.sendLoginCodeToUserEmail()
     onloginPage.FetchAndEnterLoginCode(serverID, userEmailId)
+    onloginPage.verifySuccessfulLogin('Login')
   })
 }) 
