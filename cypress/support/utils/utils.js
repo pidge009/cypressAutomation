@@ -17,6 +17,19 @@ export class Utils {
     explicitWait(value) {
         cy.wait(value)
     }
+
+    
+    verifyStepIsSuccessful(locator, stepName) {
+        this.explicitWait(2000)
+        cy.get('body').then(($body) => {
+            const element = $body.find(locator)
+            if (element.length == 0) {
+                cy.log(`${stepName} is Successful`)
+            } else {
+                throw new Error(`${stepName} Failed ${element.text()}`);
+            }
+        })
+    }
 }
 
 export const utils = new Utils()
