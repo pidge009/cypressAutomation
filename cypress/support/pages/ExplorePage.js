@@ -4,6 +4,12 @@ import { utils } from "../utils/utils"
 const ExploreTagLocator = '[data-testid="/explore"]'
 const searchBoxLocator = '#search-input'
 const numberOfRecordsLocator = '.research-card'
+const notVettedFilterLocator = '.popover-btn'
+const applyfilterLocator = '.apply-btn'
+const filterBtnLocator = 'Filters'
+const resetfilterLocator = '.reset-btn'
+const vettedFilterLocator = '.wide-box'
+const unVettedIdicatorOnUI = '.tag'
 
 // Methods
 
@@ -29,7 +35,7 @@ export class ExplorePage {
         expect(ActualLength).to.be.equal(expectedLength)
     }
 
-    verifyPagination(no_of_records_per_page){
+    verifyPagination(no_of_records_per_page) {
         this.verifyNumberofSearchResultonUI(no_of_records_per_page)
     }
 
@@ -67,6 +73,39 @@ export class ExplorePage {
         const actualNormalized = normalize(combined);
         expect(actualNormalized).to.include(searchKey.toLowerCase());
     }
+
+    clickonFilters() {
+        utils.clickwithText(filterBtnLocator)
+    }
+
+    selectVettedFilterType(filterValue) {
+        cy.get(vettedFilterLocator)
+            .contains(filterValue)
+            .click()
+        utils.verifyAttrValue(vettedFilterLocator, 'have.class', 'selected')
+    }
+
+    clickApplyFilter() {
+        utils.click(applyfilterLocator)
+    }
+
+    verifyAllTheRecordsonThePageareUnvetted() {
+        cy.get(unVettedIdicatorOnUI).each((element) => {
+            utils.verifyAttrValue(element, 'have.class', 'unvetted')
+        })
+    }
+
+    clickResetFilter() {
+        utils.click(resetfilterLocator)
+    }
+
+    verifyNotVettedFilterApplied(atrr_to_check, expectedClass) {
+        utils.verifyAttrValue(notVettedFilterLocator, atrr_to_check, expectedClass)
+    }
+    verifyNotVettedFilterRemoved(atrr_to_check, expectedClass) {
+        utils.verifyAttrValue(notVettedFilterLocator, atrr_to_check, expectedClass)
+    }
+
 }
 
 export const onExplorePage = new ExplorePage()
