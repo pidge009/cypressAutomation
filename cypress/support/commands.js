@@ -24,10 +24,22 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+import { onloginPage } from "./pages/LoginPage"
+
 Cypress.Commands.add('getLoginCode', (serverID, email) => {
     return cy.mailosaurGetMessage(serverID, {
         sentTo: email,
     }).then((message) => {
         return message.html.codes[0].value
     })
+})
+
+Cypress.Commands.add('loginWithMailosaur', (applicationURL,userEmailId, password, serverID) => {
+  cy.visit(applicationURL)  
+  onloginPage.login(userEmailId, password)
+  onloginPage.verifyLoginCodeSendMethodValidation('Email')
+  onloginPage.sendLoginCodeToUserEmail()
+  onloginPage.verifyLoginCodeSent('Sending login code')
+  onloginPage.FetchAndEnterLoginCode(serverID, userEmailId)
+  onloginPage.verifySuccessfulLogin('Login')
 })

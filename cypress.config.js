@@ -2,11 +2,13 @@ const { defineConfig } = require("cypress");
 require('dotenv').config();
 
 module.exports = defineConfig({
+  defaultCommandTimeout: 10000,
   allowCypressEnv: false,
   env: {
     "MAILOSAUR_API_KEY": process.env.MAILOSAUR_API_KEY,
     "MAILOSAUR_SERVER_ID": process.env.MAILOSAUR_SERVER_ID,
-    "PASSWORD": process.env.PASSWORD
+    "PASSWORD": process.env.PASSWORD,
+    "API_TOKEN":process.env.API_TOKEN
   },
   expose: {
     "BASE_URL": "https://rc.viewiq.com",
