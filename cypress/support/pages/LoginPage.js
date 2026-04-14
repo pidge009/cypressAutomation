@@ -8,7 +8,7 @@ const validationMethodselectedLocator = 'input[type="radio"]'
 const sendLoginCodeToUserEmailLocator = '[data-testid="next-button-main"]'
 const LoginCodeLocator = '.code-input'
 const codeMessageLocator = '.code-message'
-const errorSendingValidationLocator = '.modal-content'
+const errorSendingValidationLocator = '.rendered-error'
 
 
 // Methods
@@ -19,7 +19,7 @@ export class LoginPage {
         utils.enterText(userNameValueLocator, userName)
         utils.enterText(passwordValueLocator, password)
         utils.click(loginBtnLocator)
-        utils.explicitWait(2000)
+        // utils.explicitWait(2000)
     }
 
     verifyLoginCodeSendMethodValidation(methodName) {
@@ -41,14 +41,26 @@ export class LoginPage {
                     .eq(index)
                     .type(digit)
             })
-        })  
+        })
+        // utils.explicitWait(2000)
     }
     verifySuccessfulLogin(stepName) {
-        utils.verifyStepIsSuccessful(codeMessageLocator , stepName)
+        cy.log('Executing this step')
+        utils.verifyStepIsSuccessful(codeMessageLocator, stepName).then((result) => {
+            if (result == false) {
+                throw new Error('Log in');
+            }
+        })
     }
 
-     verifyLoginCodeSent(stepName) {
-        utils.verifyStepIsSuccessful(errorSendingValidationLocator , stepName)
+    verifyLoginCodeSent(stepName) {
+        utils.verifyStepIsSuccessful(errorSendingValidationLocator, stepName).then((result) => {
+            if (result == false) {
+                cy.log('Retrying to send the Login code')
+                cy.get('body').type('{esc}')
+                utils.click(sendLoginCodeToUserEmailLocator)
+            }
+        })
     }
 }
 
