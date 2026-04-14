@@ -19,6 +19,19 @@ export class Utils {
     }
 
 
+    verifyAttrValue(locator, atrr_to_check ,expectedClass) {
+        cy.get(locator).then(locator => {
+            cy.wrap(locator).should(atrr_to_check, expectedClass)
+        })
+    }
+
+    clickwithText(locator) {
+        cy.contains(locator).then(locator => {
+            cy.wrap(locator).click()
+        })
+    }
+
+
     verifyStepIsSuccessful(locator, stepName) {
         this.explicitWait(2000)
         return cy.get('body').then(($body) => {
@@ -39,7 +52,7 @@ export class Utils {
         })
     }
 
-    hitGET(baseURL , auth_token , searchKey) {
+    hitGET(baseURL, auth_token, searchKey) {
         return cy.request({
             method: 'GET',
             url: `${baseURL}/api/v1/channels/`,
