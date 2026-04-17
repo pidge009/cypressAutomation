@@ -10,8 +10,8 @@ describe('Automation suite for the Insights/Eport module of the ViewIQ platform'
     cy.fixture('explore.json').as('data')
     cy.env(['MAILOSAUR_SERVER_ID', 'PASSWORD', 'API_TOKEN']).then((env) => {
       serverID = env.MAILOSAUR_SERVER_ID,
-        password = env.PASSWORD
-      api_token = env.API_TOKEN
+      password = env.PASSWORD,
+      api_token = env.API_TOKEN,
       applicationURL = Cypress.expose('BASE_URL')
       userEmailId = `challenge@${serverID}.mailosaur.net`
       cy.mailosaurDeleteAllMessages(serverID)
@@ -31,6 +31,11 @@ describe('Automation suite for the Insights/Eport module of the ViewIQ platform'
       onExplorePage.goToExplore()
       onExplorePage.verifyPagination(data.recordsPerPage)
     })
+  })
+  it('Test Case 3 Filters - Set Min/Max', () => {
+    onExplorePage.goToExplore()
+    onExplorePage.clickonFilters()
+    onExplorePage.assertMinValuesMatchApiAndUI(applicationURL,api_token)
   })
   it('Test Case 4 Suitability Filter + Reset', () => {
     onExplorePage.goToExplore()
